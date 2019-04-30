@@ -15,3 +15,35 @@ This is the repository for comp90024 assignment 2 group project
        
 #Adelaide
 #streamer.filter(locations=[138.42,-35.10,138.87,-34.78])
+
+key of node 1:
+Consumer API keys
+gKXNjLGKoh9D2mNxOVTHHBdWI (API key)
+CAQ0534UcpjUV9tZmr3vSEANgkEokkQUw3VylReNZHGhZVgcUg (API secret key)
+Access token & access token secret
+1118325454031601664-Gu6XlEc8F9G12Oh7hvcgGSCQqo01zH (Access token)
+oBXXKzvNRNnjChBG8EdVSQt0YxPs6NfIfdhWkrIMvkJrp (Access token secret)
+
+key of node 2:
+Consumer API keys
+RXoqS0f48iPVc2itIP9JpqWak (API key)
+bObKFvBbBvdhSDfiJXefGZBlSUsuzYNzxMGHT05CZ67gtPpN0S (API secret key)
+Access token & access token secret
+1118325454031601664-6A5tLXZxZNHxOIfuTFFwqAyjQlTz9H (Access token)
+0khoaXfDAfuas1QYZlSyeaukiTSzbKNohUjk9H1BnWphh (Access token secret)
+
+key of node 3:
+Consumer API keys
+uwoENMuaDBaK2S3pyCbKDTeqg (API key)
+CmX2yWJeT5gKVZCPuj3FKEkCqe2N3jsljeZcx15ukftDYAYfz8 (API secret key)
+Access token & access token secret
+1118325454031601664-VUsElYVD2Q2o9IcdCHOco9IrIVgv2q (Access token)
+1USXZpEIuWqQQkhMSDyuWUBk63vYztLRZm6TDah958tNn (Access token secret)
+
+key of node 4:
+Consumer API keys
+7pgWqVOa09yJAX1yhmqAcBIjx (API key)
+bDUvkWjTd4OquRzFKs4xdwQrVpZOSR4Xdbwo2TFcbhqpiZxSOF (API secret key)
+Access token & access token secret
+1118325454031601664-c2Xm15guHEUL5CytO5CjneONPGwG4E (Access token)
+qwMVsiFc4cYwR77czDRmMjdxgGhZT7VvjIkWswkNafkod (Access token secret)
