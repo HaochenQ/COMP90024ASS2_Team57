@@ -1,0 +1,21 @@
+# create a directory if it doesn't exist
+#- file:
+#    path: ~/twitter_analysis/
+#    state: directory
+#    mode: 0755
+
+- name: synchronize all twitter analysis file
+  synchronize:
+    src: ../../../../twitter_analysis 
+    dest: ~/
+
+
+#- name: copy analysis file to dictionary
+#  copy:
+#    src: ../../../../twitter_analysis.py
+#    dest: ~/twitter_analysis/twitter_analysis.py
+#    owner: ubuntu 
+#    mode: 0644
+
+
+
