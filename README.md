@@ -3,18 +3,18 @@ This is the repository for comp90024 assignment 2 group project
 
 
 #Sydney
-#streamer.filter(locations=[151.20,-33.87,151.12,-33.52])
+#streamer.filter(locations=[151.12,-33.87,151.20,-33.52])  or [150.6396, -34.1399, 151.3439, -33.5780] (Flickr )
     
     
 #Melbourne
-#streamer.filter(locations=[144.74,-38.13,145.34,-37.52])
+#streamer.filter(locations=[144.74,-38.13,145.34,-37.52])  or [144.5532, -38.2250, 145.5498, -37.5401] (Flickr)
     
     
 #Brisbane
-#streamer.filter(locations=[152.84,-27.67,153.28,-27.21])
+#streamer.filter(locations=[152.84,-27.67,153.28,-27.21])  or [152.6797, -27.7210, 153.2204, -27.1203] (Flickr)
        
 #Adelaide
-#streamer.filter(locations=[138.42,-35.10,138.87,-34.78])
+#streamer.filter(locations=[138.42,-35.10,138.87,-34.78])  or [138.4421, -35.3490, 138.7832, -34.6481] (Flickr)
 
 key of node 1:
 Consumer API keys
