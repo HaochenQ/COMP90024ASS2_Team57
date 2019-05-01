@@ -1,0 +1,21 @@
+- name: Update pip
+  become: yes
+  pip: 
+    name: ['pip']
+    state: latest
+# pip install --upgrade pip
+
+- name: Install Numpy
+  become: yes
+  pip:
+    name: ['numpy']
+    state: latest
+# pip install numpy
+
+- name: Install pandas 
+  become: yes
+  pip:
+    name: ['pandas']
+    state: latest
+# pip install numpy
+
