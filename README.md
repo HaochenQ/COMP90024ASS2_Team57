@@ -48,5 +48,7 @@ Access token & access token secret
 1118325454031601664-c2Xm15guHEUL5CytO5CjneONPGwG4E (Access token)
 qwMVsiFc4cYwR77czDRmMjdxgGhZT7VvjIkWswkNafkod (Access token secret)
 
-PID:
+check PID:
+ps -aux | grep 'getTweetsByLocation.py'
 6029  21527 21802 25208
+
