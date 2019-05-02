@@ -1,13 +1,26 @@
-# create a directory if it doesn't exist
-#- file:
-#    path: ~/twitter_analysis/
-#    state: directory
-#    mode: 0755
+- name: create a directory if it doesn't exist
+  file:
+    path: ~/twitter_analysis/
+    state: directory
+    mode: 0755
 
 - name: synchronize all twitter analysis file
   synchronize:
-    src: ../../../../twitter_analysis 
+    src: ../../../../../twitter_analysis 
     dest: ~/
+
+- name: run docker build for spark
+  become: yes
+  command: docker build --tag spark-2:2.4.1 twitter_analysis/spark/spark-2 
+
+
+#- name: Run a script with arguments
+#  become: yes
+#  #script: ../../../../../twitter_analysis/twitter_analysis.py
+#  script: twitter_analysis.py
+#  args:
+#    executable: python
+
 
 
 #- name: copy analysis file to dictionary

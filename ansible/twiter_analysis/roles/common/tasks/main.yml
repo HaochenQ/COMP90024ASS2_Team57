@@ -5,17 +5,17 @@
     state: latest
 # pip install --upgrade pip
 
-- name: Install Numpy
-  become: yes
-  pip:
-    name: ['numpy']
-    state: latest
+#- name: Install Numpy
+#  become: yes
+#  pip:
+#    name: ['numpy']
+#    state: latest
 # pip install numpy
 
-- name: Install pandas 
-  become: yes
-  pip:
-    name: ['pandas']
-    state: latest
+#- name: Install pandas 
+#  become: yes
+#  pip:
+#    name: ['pandas']
+#    state: latest
 # pip install numpy
 
