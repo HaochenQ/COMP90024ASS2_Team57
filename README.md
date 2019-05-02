@@ -50,5 +50,5 @@ qwMVsiFc4cYwR77czDRmMjdxgGhZT7VvjIkWswkNafkod (Access token secret)
 
 check PID:
 ps -aux | grep 'getTweetsByLocation.py'
-6029  21527 21802 25208
+15805  21527 21802 25208
 
