@@ -1,26 +1,33 @@
 from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, jsonify, abort, request, make_response
 app = Flask(__name__)
 
-posts = [
-	{
-		'author': 'Gloria',
-		'title': 'Blog post 1',
-		'content': 'First post content',
-		'date_posted': 'April 27 2019'
-	},
-	{
-		'author': 'Mia',
-		'title': 'Blog post 2',
-		'content': 'Second post content',
-		'date_posted': 'April 28 2019'
-	}
-]
+auth = HTTPBasicAuth()
+
+@auth.get_password
+def get_password(username):
+    if username == 'admin':
+        return 'admin'
+    return None
+
+@auth.error_handler
+def unauthorized():
+    return make_response(jsonify( { 'error': 'Unauthorized access' } ), 403)
+    # return 403 instead of 401 to prevent browsers from displaying the default auth dialog
+    
+@app.errorhandler(400)
+def bad_request(error):
+    return make_response(jsonify( { 'error': 'Bad request' } ), 400)
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify( { 'error': 'Not found' } ), 404)
 
 # so can access home page though two paths
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', posts = posts)
+    return render_template('home.html')
 
 
 @app.route("/about")
