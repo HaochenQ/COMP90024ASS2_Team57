@@ -24,17 +24,17 @@ json = import_simplejson()
 try:
     couchclient = couchdb.Server()
 except:
-    print "Cannot find CouchDB Server ... Exiting\n"
-    print "----_Stack Trace_-----\n"
+    print ("Cannot find CouchDB Server ... Exiting\n")
+    print ("----_Stack Trace_-----\n")
     raise
 
 #Try to use the twitter bucket or else switch to use default bucket
 try:
     db = couchclient['exa']
-    print "Using exa bucket"
+    print ("Using exa bucket")
 except:
     db = couchclient['default']
-    print "Using default bucket"
+    print ("Using default bucket")
 
 #OAuth
 auth1 = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -44,7 +44,7 @@ class StreamListener(tweepy.StreamListener):
     json = import_simplejson()
 
     def on_status(self, tweet):
-        print 'Ran on_status'
+        print ('Ran on_status')
 
     def on_error(self, status_code):
         print(status_code)

@@ -1,4 +1,4 @@
 import numpy
 import pandas
 
-print 'ok, test passed'
+print ('ok, test passed')
