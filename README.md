@@ -53,5 +53,5 @@ check PID:
 ps -aux | grep 'getTweetsByLocation.py'
 
 
-Current PID: 15805  21527 21802 25208
+Current PID: 15805  9988 21802 25208
 
