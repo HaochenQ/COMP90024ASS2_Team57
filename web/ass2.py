@@ -1,37 +1,34 @@
 from flask import Flask, render_template, url_for, jsonify, abort, request, make_response
-# from flask_httpauth import HTTPBasicAuth
 import couchdb
 import requests
 import json
 app = Flask(__name__)
 
 server_url = "http://127.0.0.1:5984/"
-
-
 def getDataFromCouchDB(data):
     # this function will convert a list of dictionaries obtained from couchDB into a dictionary
     # which contains all required information for analysis
-	dic = {}
+    dic = {}
 
     # iterate all documents
     for i in data:
         try:
-            temp = {}
+            temp={}
             temp["twitter_result"] = i['twitter_result']
             temp["obesity"] = i['obesity']
             temp["heart_disease"] = i['heart_disease']
             dic[i['city']] = temp
-		except:
-			continue
-	return dic
+        except:
+            continue
+    return dic
 
 try:
     couch = couchdb.Server(server_url)
 except:
-    print "Cannot find CouchDB Server ... Exiting\n"
-    print "----_Stack Trace_-----\n"
+    print("Cannot find CouchDB Server ... Exiting")
+    print("----_Stack Trace_-----")
     raise
-
+    
 # couchdb username and password
 couch.resource.credentials = ('admin', 'admin')
 
