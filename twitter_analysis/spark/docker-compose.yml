@@ -109,6 +109,128 @@ services:
       sparknet:
         ipv4_address: "173.17.2.5"
 
+  spark-worker-4:
+    image: spark-2:2.4.1
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    environment:
+      SPARK_CONF_DIR: /conf
+      SPARK_PUBLIC_DNS: 173.17.2.6
+      SPARK_WORKER_CORES: 2
+      SPARK_WORKER_MEMORY: 1g
+      SPARK_WORKER_PORT: 8881
+      SPARK_WORKER_WEBUI_PORT: 8081
+    links:
+      - spark-master
+    expose:
+      - 7012
+      - 7013
+      - 7014
+      - 7015
+      - 7016
+    ports:
+      - 8084:8081
+    volumes:
+      - ./conf/spark-worker-4:/conf
+      - ./data:/tmp/data
+    networks:
+      sparknet:
+        ipv4_address: "173.17.2.6"
+
+  spark-worker-5:
+    image: spark-2:2.4.1
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    environment:
+      SPARK_CONF_DIR: /conf
+      SPARK_PUBLIC_DNS: 173.17.2.7
+      SPARK_WORKER_CORES: 2
+      SPARK_WORKER_MEMORY: 1g
+      SPARK_WORKER_PORT: 8881
+      SPARK_WORKER_WEBUI_PORT: 8081
+    links:
+      - spark-master
+    expose:
+      - 7012
+      - 7013
+      - 7014
+      - 7015
+      - 7016
+    ports:
+      - 8085:8081
+    volumes:
+      - ./conf/spark-worker-5:/conf
+      - ./data:/tmp/data
+    networks:
+      sparknet:
+        ipv4_address: "173.17.2.7"
+
+  spark-worker-6:
+    image: spark-2:2.4.1
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    environment:
+      SPARK_CONF_DIR: /conf
+      SPARK_PUBLIC_DNS: 173.17.2.8
+      SPARK_WORKER_CORES: 2
+      SPARK_WORKER_MEMORY: 1g
+      SPARK_WORKER_PORT: 8881
+      SPARK_WORKER_WEBUI_PORT: 8081
+    links:
+      - spark-master
+    expose:
+      - 7012
+      - 7013
+      - 7014
+      - 7015
+      - 7016
+    ports:
+      - 8086:8081
+    volumes:
+      - ./conf/spark-worker-6:/conf
+      - ./data:/tmp/data
+    networks:
+      sparknet:
+        ipv4_address: "173.17.2.8"
+
+  spark-worker-7:
+    image: spark-2:2.4.1
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    environment:
+      SPARK_CONF_DIR: /conf
+      SPARK_PUBLIC_DNS: 173.17.2.9
+      SPARK_WORKER_CORES: 2
+      SPARK_WORKER_MEMORY: 1g
+      SPARK_WORKER_PORT: 8881
+      SPARK_WORKER_WEBUI_PORT: 8081
+    links:
+      - spark-master
+    expose:
+      - 7012
+      - 7013
+      - 7014
+      - 7015
+      - 7016
+    ports:
+      - 8087:8081
+    volumes:
+      - ./conf/spark-worker-6:/conf
+      - ./data:/tmp/data
+    networks:
+      sparknet:
+        ipv4_address: "173.17.2.9"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 networks:
   sparknet:

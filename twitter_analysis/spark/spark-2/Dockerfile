@@ -13,7 +13,9 @@ RUN apt-get update; \
                        python \
                        software-properties-common \
                        wget \
-                       python-pip;
+                       python-pip \
+                       vim \
+                       ssh;
 
 RUN wget -qO- $SPARK_ARCHIVE | tar -xz -C /usr/local/
 
@@ -22,6 +24,6 @@ RUN pip install couchdb
 
 
 # WorcCount script and data
-COPY ["wc.py", "wc.txt", "/root/"]
+COPY ["wc.py", "location.csv", "/root/"]
 
 WORKDIR $SPARK_HOME

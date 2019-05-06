@@ -91,6 +91,17 @@ get detailed info of doc with _id in db melbourne:
 curl -X GET "http://localhost:5984/melbourne/_id"
 
 
+4. Spark commands:
+
+sudo docker-compose up
+
+sudo docker exec -ti spark_spark-master_1 /bin/bash
+pyspark
+execfile('/root/wc.py')
+exit()
+exit 
+
+
 
 
 

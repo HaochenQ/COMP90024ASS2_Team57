@@ -1,0 +1,47 @@
+exa + melbourne
+
+[u'foods', u'sandwiches', u'groceries', u'foo', u'meals', u'nonalcoholic', u'popeyes', u'leftovers', u'hella', u'dishes', u'sauces', u'fleas', u'kfc', u'localized', u'fooddrinks', u'cheetos', u'rabid', u'grind', u'colorado', u'fo', u'chips', u'aways', u'treats', u'inexpensive', u'ingredients', u'sodium', u'sugar', u'continuing', u'griddle', u'eventsmusic', u'biscuit', u'loan', u'platters', u'bk', u'clogged', u'ragu', u'frie', u'pharmaceuticals', u'condiments', u'slop', u'destitute', u'stuff', u'filet', u'weep', u'coworkers', u'dairy', u'cardboard', u'lobster', u'roundup', u'wings', u'quesadillas', u'poutine', u'frisby', u'cheese', u'counterparts', u'savage', u'caucasian', u'flavors', u'smoothie', u'flame', u'garnish', u'fries', u'insulin', u'burgers', u'cookies', u'steak', u'experimenting', u'hotdogs', u'underserved', u'meatballs', u'taco', u'seafood', u'buffet', u'teas', u'statewide', u'vegetables', u'shannon', u'egusi', u'takeaway', u'chickenwings', u'fruits', u'meal', u'sandwich', u'congealed', u'crinkles', u'grain', u'authentically', u'allll', u'blankets', u'lollies', u'garbage', u'preferring', u'unroll', u'haircuts', u'foodnot', u'snacks', u'flour', u'healthily', u'subway', u'oreos']
+
+100
+adelaide: total tweets: 7088, contain keyword: 65, rate: 0.009                  
+melbourne: total tweets: 37788, contain keyword: 436, rate: 0.012
+bristane: total tweets: 13896, contain keyword: 157, rate: 0.011
+sydney: total tweets: 36691, contain keyword: 378, rate: 0.010
+
+50
+adelaide: total tweets: 7105, contain keyword: 43, rate: 0.006                  
+melbourne: total tweets: 37788, contain keyword: 288, rate: 0.008
+bristane: total tweets: 13923, contain keyword: 103, rate: 0.007
+sydney: total tweets: 36749, contain keyword: 226, rate: 0.006
+
+
+20
+adelaide: total tweets: 7110, contain keyword: 7, rate: 0.001                   
+melbourne: total tweets: 37788, contain keyword: 56, rate: 0.001
+bristane: total tweets: 13930, contain keyword: 24, rate: 0.002
+sydney: total tweets: 36753, contain keyword: 46, rate: 0.001
+
+200
+adelaide: total tweets: 7112, contain keyword: 1427, rate: 0.201                
+melbourne: total tweets: 37788, contain keyword: 7557, rate: 0.200
+bristane: total tweets: 13931, contain keyword: 2661, rate: 0.191
+sydney: total tweets: 36754, contain keyword: 6836, rate: 0.186
+
+
+melbourne
+[u'jiu', u'delicious', u'tea', u'michael', u'primarystemchat', u'playful', u'bailey', u'celebrations', u'ups', u'brand', u'joy', u'empathy', u'staff', u'friendship', u'healthy', u'authentic', u'lunchtime', u'everyones', u'research', u'jitsu', u'material', u'preorder', u'regrets', u'james', u'fundraising', u'colleagues', u'simplicity', u'littlebilly', u'tasting', u'vulnerability', u'sisters', u'pancakes', u'benny', u'writing', u'chest', u'specials', u'lacking', u'grace', u'connecting', u'humanitarian', u'motherinlaw', u'starbucks', u'value', u'filling', u'conversations', u'airbnb', u'presenting', u'thoughtful', u'comics', u'runway', u'doyle', u'service', u'bistro', u'purposes', u'panel', u'psycho', u'profile', u'supervisors', u'alliance', u'peace', u'events', u'flavours', u'stickers', u'prayers', u'caravan', u'kacey', u'phd', u'kisses', u'migrants', u'broth', u'animal', u'foodporn', u'apprentices', u'teachers', u'fabulous', u'flyers', u'embracing', u'anniversary', u'flowers', u'baggage', u'midwives', u'1800', u'learning', u'prayer', u'bee', u'marcela', u'interactions', u'orgs', u'linen', u'dynamic', u'happiest', u'sensory', u'730am', u'habitat', u'lovers', u'beloved', u'claire', u'mel', u'enjoying', u'confusion']
+
+adelaide: total tweets: 7093, contain keyword: 252, rate: 0.036                 
+melbourne: total tweets: 37788, contain keyword: 1345, rate: 0.036
+bristane: total tweets: 13908, contain keyword: 452, rate: 0.032
+sydney: total tweets: 36713, contain keyword: 1325, rate: 0.036
+
+
+exa
+[u'foods', u'inexpensive', u'nuts', u'popeyes', u'treats', u'berries', u'peasants', u'insanely', u'chips', u'payment', u'principle', u'soda', u'pools', u'squad', u'copious', u'exam', u'specifically', u'fuss', u'wifi', u'recs', u'shade', u'vaccine', u'payments', u'clarity', u'headphones', u'fooddrinks', u'wig', u'patience', u'citizenship', u'browse', u'slob', u'diagnosed', u'foo', u'stuff', u'cheetos', u'confuse', u'fairs', u'concrete', u'fairtrade', u'meals', u'ducks', u'salmon', u'mcds', u'roam', u'settle', u'satisfaction', u'sodas', u'pumped', u'crusts', u'snacking', u'grass', u'bass', u'fragile', u'neat', u'decorations', u'valid', u'booking', u'edgy', u'business', u'instructions', u'beating', u'functionally', u'villains', u'sympathy', u'abroad', u'subway', u'theyd', u'spawn', u'sumn', u'191', u'cardboard', u'foodnot', u'passport', u'refined', u'bullets', u'foh', u'sacrifice', u'authentic', u'drinking', u'snuggle', u'latter', u'thereof', u'debit', u'shits', u'fo', u'ebt', u'shoulders', u'greyhound', u'ol', u'clippings', u'salted', u'sucking', u'happily', u'pockets', u'improving', u'groceries', u'cereal', u'pump', u'noises', u'jungoo']
+
+adelaide: total tweets: 7096, contain keyword: 135, rate: 0.019                 
+melbourne: total tweets: 37788, contain keyword: 831, rate: 0.022
+bristane: total tweets: 13912, contain keyword: 320, rate: 0.023
+sydney: total tweets: 36724, contain keyword: 776, rate: 0.021
+
