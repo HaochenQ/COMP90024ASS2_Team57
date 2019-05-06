@@ -24,6 +24,6 @@ RUN pip install couchdb
 
 
 # WorcCount script and data
-COPY ["wc.py", "location.csv", "/root/"]
+COPY ["wa.py", "location.csv", "/root/"]
 
 WORKDIR $SPARK_HOME

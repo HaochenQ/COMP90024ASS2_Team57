@@ -2,7 +2,7 @@ import couchdb
 import sys
 import re
 import string
-from pyspark.mllib.feature import Word2Vec
+from pyspark.mllib.feature import Word2Vec, SparkContext
 import pickle as pk
 import argparse
 import numpy as np
@@ -10,7 +10,7 @@ import csv
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
-
+sc = SparkContext() # remove it if executed from pyspark
 
 # location la
 
@@ -201,7 +201,7 @@ def main():
     wv_tweet_info_list, a_tweet_info_list = preprocessing_tweet(couch, args)
 
     if args.word2vec:
-        syms_word = word_2_vector(wv_tweet_info_list, args)
+        syms_word = word_2_vector(wv_tweet_info_list + a_tweet_info_list, args)
     else:
         syms_word = pk.load(open(args.keyword+'_syms.pkl'))[0:args.syms_num]
         print(syms_word)

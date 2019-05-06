@@ -2,5 +2,5 @@
   remote_user: ubuntu
   sudo: yes
   roles: 
-#    - common
+    - common
     - twitter_analysis

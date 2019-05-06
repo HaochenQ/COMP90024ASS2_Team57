@@ -1,0 +1,40 @@
+VM:
+
+
+---------------------------------------------------------------------------
+Couchdb:
+
+---------------------------------------------------------------------------
+Twitter analysis:
+
+1. Go to COMP90024ASS2/ansible/twitter_analysis:
+    
+    cd path/to/COMP90024ASS2/ansible/twitter_analysis
+
+2. Run run_twitter_analysis.sh file to start the ansible, it will:
+ (1) install the docker-ce, docker-compose and useful packages. 
+ (2) transfer all twitter analysis file to remote instances
+ (3) build the spark using docker
+ (4) read docker-compose,yml
+
+    sudo ./run_twitter_analysis.sh
+
+3. Go to the remote server (in our project it is 45.113.235.188):
+    
+    docker exec -ti spark_spark-master_1 /bin/bash
+
+in the spark master bash, execute: 
+    
+    ./bin/spark-submit /root/wa.py --word2vec=True --syms_num=100
+
+more arguments refer to parser in code wa.py.
+
+Then the results will be stored in couchdb on server (default in database data_analysis)
+
+---------------------------------------------------------------------------
+Twitter correlation analysis:
+
+---------------------------------------------------------------------------
+Web deploy:
+
+
