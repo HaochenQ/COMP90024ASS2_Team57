@@ -70,7 +70,6 @@ print("high blood pressure risk",  printt(hi_blood_pressure_risk))
 print("mental depression",  printt(psy_distress))
 print("low exercise", printt(lo_exercise))
 
-
 user = 'admin'
 passwd = 'admin'
 couchserver = couchdb.Server('http://%s:%s@45.113.235.228:5984/'%(user,passwd))
@@ -207,40 +206,41 @@ plt.figure(figsize=(8,11))
 plt.subplot(3, 2, 1)
 plt.bar(y_pos, overweight, align='center', alpha=0.5)
 plt.xticks(y_pos, objects)
-plt.ylabel('Rate')
+plt.ylabel('Rate (100%)')
 plt.title('Overweight Rate in four cities')
 
 plt.subplot(3, 2, 2)
 plt.bar(y_pos, obseity, align='center', alpha=0.5)
 plt.xticks(y_pos, objects)
-plt.ylabel('Rate')
+plt.ylabel('Rate (100%)')
 plt.title('Obesity Rate in four cities')
 
 plt.subplot(3, 2, 3)
 plt.bar(y_pos, chronic_disease_risk, align='center', alpha=0.5)
 plt.xticks(y_pos, objects)
-plt.ylabel('Rate')
+plt.ylabel('Rate (100%)')
 plt.title('Chronic Disease Risk Rate in four cities')
 
 plt.subplot(3, 2, 4)
 plt.bar(y_pos, hi_blood_pressure_risk, align='center', alpha=0.5)
 plt.xticks(y_pos, objects)
-plt.ylabel('Rate')
+plt.ylabel('Rate (100%)')
 plt.title('High Blood Pressure Risk Rate in four cities')
 
 plt.subplot(3, 2, 5)
 plt.bar(y_pos, psy_distress, align='center', alpha=0.5)
 plt.xticks(y_pos, objects)
-plt.ylabel('Rate')
+plt.ylabel('Rate (100%)')
 plt.title('Mental Depression Rate in four cities')
 
 plt.subplot(3, 2, 6)
 plt.bar(y_pos, lo_exercise, align='center', alpha=0.5)
 plt.xticks(y_pos, objects)
-plt.ylabel('Rate')
+plt.ylabel('Rate (100%)')
 plt.title('Low Exerise Rate in four cities')
 
 plt.savefig('rates.png')
+
 
 # plot aurin data
 aurin_rows = db_aurin.view('_all_docs', include_docs=True)
