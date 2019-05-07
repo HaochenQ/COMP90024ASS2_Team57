@@ -4,7 +4,7 @@ import requests
 import json
 app = Flask(__name__)
 
-server_url = "http://127.0.0.1:5984/"
+server_url = "http://45.113.235.228:5984/"
 def getDataFromCouchDB(data):
     # this function will convert a list of dictionaries obtained from couchDB into a dictionary
     # which contains all required information for analysis
