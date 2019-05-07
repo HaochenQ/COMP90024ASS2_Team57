@@ -128,7 +128,10 @@
      	  var ne = rectangle.getBounds().getNorthEast();
         var sw = rectangle.getBounds().getSouthWest();
         var data = JSON.parse('{{ data|safe }}');
-        var contentString =  name + " has " + data[name].twitter_result + " twitters";
+        if(name == 'brisbane'){
+          name = 'bristane'
+        }
+        var contentString =  name + " has " + data[name].total_twitter + " twitters";
         // Set the info window's content and position.
         infoWindow.setContent(contentString);
         infoWindow.setPosition(ne);

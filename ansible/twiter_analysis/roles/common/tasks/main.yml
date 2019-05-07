@@ -1,3 +1,31 @@
+- name: "APT - Add Docker GPG key"
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: "APT - Add Docker repository"
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+    state: present
+    filename: docker
+
+- name: "APT - install misc packages"
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - "python-pip"
+    - "aptitude"
+    - "apt-transport-https"
+    - "ca-certificates"
+    - "curl"
+    - "software-properties-common"
+
+- name: "APT - install 'docker-ce'"
+  apt:
+    name: "docker-ce"
+    update_cache: yes
+
 - name: Update pip
   become: yes
   pip: 
@@ -5,17 +33,47 @@
     state: latest
 # pip install --upgrade pip
 
-- name: Install Numpy
+- name: install docker-compose
   become: yes
   pip:
-    name: ['numpy']
-    state: latest
+    name: 
+      - docker-compose
+
+
+- name: download docker compose file 
+  become: yes
+  shell: 'curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+
+
+- name: change the permissions of docker compose file
+  file:
+    path: /usr/local/bin/docker-compose
+    state: file
+    mode: '+x'
+
+
+- name: link docker compose file
+  file:
+    src: '/usr/local/bin/docker-compose'
+    dest: '/usr/bin/docker-compose'
+    state: link
+    mode: '-s'
+
+- name: run the service defined in my_project's docker-compose.yml
+  become: yes
+  docker_service:
+    project_src: /home/ubuntu/twitter_analysis/spark
+#- name: Install Numpy
+#  become: yes
+#  pip:
+#    name: ['numpy']
+#    state: latest
 # pip install numpy
 
-- name: Install pandas 
-  become: yes
-  pip:
-    name: ['pandas']
-    state: latest
+#- name: Install pandas 
+#  become: yes
+#  pip:
+#    name: ['pandas']
+#    state: latest
 # pip install numpy
 

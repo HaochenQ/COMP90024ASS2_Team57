@@ -69,3 +69,41 @@ curl -X DELETE "http://172.17.0.2:5986/_nodes/nonode@nohost?rev=${rev}"  --user 
 
 for cont in "${conts[@]}"; do sudo docker restart ${cont}; done
 sleep 3
+
+
+
+
+
+
+
+3. COUCHDB commands:
+
+list all database:
+curl -X GET "http://localhost:5984/_all_dbs"
+
+check the summary info in db melbourne:
+curl -X GET "http://localhost:5984/melbourne"
+
+check all documents in db melbourne
+curl -X GET "http://localhost:5984/melbourne/_all_docs"
+
+get detailed info of doc with _id in db melbourne:
+curl -X GET "http://localhost:5984/melbourne/_id"
+
+
+4. Spark commands:
+
+sudo docker-compose up
+
+sudo docker exec -ti spark_spark-master_1 /bin/bash
+pyspark
+execfile('/root/wc.py')
+exit()
+exit 
+
+
+
+
+
+
+

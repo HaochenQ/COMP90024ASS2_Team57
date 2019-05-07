@@ -1,4 +1,4 @@
-- hosts: all_servers
+- hosts: analysis_server
   remote_user: ubuntu
   sudo: yes
   roles: 
