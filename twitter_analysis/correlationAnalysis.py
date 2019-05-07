@@ -156,9 +156,9 @@ def calculateCorr(list):
 print('\nfood_20:')
 calculateCorr(food_20)
 print('\nfood_50:')
-calculateCorr(food_50)
+corr50 = calculateCorr(food_50)
 print('\nfood_100:')
-calculateCorr(food_100)
+corr100 =calculateCorr(food_100)
 print('\nfood_200:')
 calculateCorr(food_200)
 
@@ -171,3 +171,104 @@ try:
     db_result['correlation_food200'] = calculateCorr(food_200)
 except:
     print("already exists")
+
+# correlation bar chart
+objects = ('overweight', 'obesity', 'chronic disease risk', 'high blood pressure risk', 
+    'mental depression', 'low exerise')
+
+y_pos = np.arange(len(objects))
+performance_50 = [corr50['overweight'],corr50['obesity'],corr50['chronic disease risk'],
+    corr50['high blood pressure risk'],corr50['mental depression'],corr50['low exerise']]
+performance_100 = [corr100['overweight'],corr100['obesity'],corr100['chronic disease risk'],
+    corr100['high blood pressure risk'],corr100['mental depression'],corr100['low exerise']]
+
+plt.figure(figsize=(8,11))
+
+plt.subplot(1, 2, 1)
+plt.bar(y_pos, performance_50, align='center', alpha=0.5)
+plt.xticks(y_pos, objects)
+plt.ylabel('correlation rate')
+plt.title('Correlation with food_50')
+
+plt.subplot(1, 2, 2)
+plt.bar(y_pos, performance_100, align='center', alpha=0.5)
+plt.xticks(y_pos, objects)
+plt.ylabel('correlation rate')
+plt.title('Correlation with food_100')
+
+plt.savefig('correlation_bar.png')
+
+# some disease rate in four cities
+objects=['Sydney','Melbourne','Adelaide','Brisbane']
+y_pos = np.arange(len(objects))
+
+plt.figure(figsize=(8,11))
+
+plt.subplot(3, 2, 1)
+plt.bar(y_pos, overweight, align='center', alpha=0.5)
+plt.xticks(y_pos, objects)
+plt.ylabel('Rate')
+plt.title('Overweight Rate in four cities')
+
+plt.subplot(3, 2, 2)
+plt.bar(y_pos, obseity, align='center', alpha=0.5)
+plt.xticks(y_pos, objects)
+plt.ylabel('Rate')
+plt.title('Obesity Rate in four cities')
+
+plt.subplot(3, 2, 3)
+plt.bar(y_pos, chronic_disease_risk, align='center', alpha=0.5)
+plt.xticks(y_pos, objects)
+plt.ylabel('Rate')
+plt.title('Chronic Disease Risk Rate in four cities')
+
+plt.subplot(3, 2, 4)
+plt.bar(y_pos, hi_blood_pressure_risk, align='center', alpha=0.5)
+plt.xticks(y_pos, objects)
+plt.ylabel('Rate')
+plt.title('High Blood Pressure Risk Rate in four cities')
+
+plt.subplot(3, 2, 5)
+plt.bar(y_pos, psy_distress, align='center', alpha=0.5)
+plt.xticks(y_pos, objects)
+plt.ylabel('Rate')
+plt.title('Mental Depression Rate in four cities')
+
+plt.subplot(3, 2, 6)
+plt.bar(y_pos, lo_exercise, align='center', alpha=0.5)
+plt.xticks(y_pos, objects)
+plt.ylabel('Rate')
+plt.title('Low Exerise Rate in four cities')
+
+plt.savefig('rates.png')
+
+# plot aurin data
+aurin_rows = db_aurin.view('_all_docs', include_docs=True)
+aurin_raw_data = [row['doc'] for row in aurin_rows]
+city_list = ['Sydney', 'Melbourne', 'Brisbane', 'Adelaide']
+
+def data_plot(aurin_raw_data, city_list):
+    dic = {}
+    for data in aurin_raw_data:
+        data_list = []
+        for city in city_list:
+            data_list.append(data[city])
+        dic[data['_id']] = data_list
+    return dic
+
+plot_aurin_plot = data_plot(aurin_raw_data, city_list)
+topics = list(plot_aurin_plot.keys())
+
+colors = ['red', 'green', 'blue', 'orange']
+
+fig, ax = plt.subplots()
+for i in range(len(city_list)):
+    for topic in topics:
+        y = plot_aurin_plot[topic][i]
+        if topic == topics[len(topics) - 1]:
+            ax.scatter(topic, y, c=colors[i], label=city_list[i], alpha=0.3, edgecolors='none')
+        else:
+            ax.scatter(topic, y, c=colors[i], alpha=0.3, edgecolors='none')
+
+plt.legend()
+plt.savefig('aurin.png')

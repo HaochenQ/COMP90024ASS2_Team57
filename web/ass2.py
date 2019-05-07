@@ -2,9 +2,10 @@ from flask import Flask, render_template, url_for, jsonify, abort, request, make
 import couchdb
 import requests
 import json
+import matplotlib.pyplot as plt
 app = Flask(__name__)
-
-server_url = "http://45.113.235.228:5984/"
+user = 'admin'
+passwd = 'admin'
 def getDataFromCouchDB(data):
     # this function will convert a list of dictionaries obtained from couchDB into a dictionary
     # which contains all required information for analysis
@@ -23,7 +24,7 @@ def getDataFromCouchDB(data):
     return dic
 
 try:
-    couch = couchdb.Server(server_url)
+    couch = couchdb.Server('http://%s:%s@45.113.235.228:5984/'%(user,passwd))
 except:
     print("Cannot find CouchDB Server ... Exiting")
     print("----_Stack Trace_-----")
@@ -43,22 +44,6 @@ raw_data = [row['doc'] for row in rows]
 
 # collect all required data into one dictionary
 data = getDataFromCouchDB(raw_data)
-
-aurin = couch['aurin']
-aurin_rows = aurin.view('_all_docs', include_docs=True)
-aurin_raw_data = [row['doc'] for row in aurin_rows]
-def data_plot(aurin_raw_data):
-    dic = {}
-    data_list = []
-    city_list = ['Sydney', 'Melbourne', 'Brisbane', 'Adelaide']
-    for data in aurin_raw_data:
-        for city in city_list:
-            data_list.append(data[city])
-        dic[data['_id']] = data_list
-    return dic
-plot_aurin_plot = data_plot(aurin_raw_data)
-print(aurin_raw_data)
-
 
 @app.errorhandler(400)
 def bad_request(error):
