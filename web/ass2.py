@@ -13,10 +13,10 @@ def getDataFromCouchDB(data):
     # iterate all documents
     for i in data:
         try:
+            if i['city'] == 'brisbane':
+                continue
             temp={}
-            temp["twitter_result"] = i['twitter_result']
-            temp["obesity"] = i['obesity']
-            temp["heart_disease"] = i['heart_disease']
+            temp["total_twitter"] = i['food_100']['total_twitter']
             dic[i['city']] = temp
         except:
             continue
@@ -43,6 +43,22 @@ raw_data = [row['doc'] for row in rows]
 
 # collect all required data into one dictionary
 data = getDataFromCouchDB(raw_data)
+
+aurin = couch['aurin']
+aurin_rows = aurin.view('_all_docs', include_docs=True)
+aurin_raw_data = [row['doc'] for row in aurin_rows]
+def data_plot(aurin_raw_data):
+    dic = {}
+    data_list = []
+    city_list = ['Sydney', 'Melbourne', 'Brisbane', 'Adelaide']
+    for data in aurin_raw_data:
+        for city in city_list:
+            data_list.append(data[city])
+        dic[data['_id']] = data_list
+    return dic
+plot_aurin_plot = data_plot(aurin_raw_data)
+print(aurin_raw_data)
+
 
 @app.errorhandler(400)
 def bad_request(error):
