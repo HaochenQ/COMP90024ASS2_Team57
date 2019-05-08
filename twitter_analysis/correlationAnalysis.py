@@ -172,7 +172,7 @@ except:
     print("already exists")
 
 # correlation bar chart
-objects = ('overweight', 'obesity', 'chronic disease risk', 'high blood pressure risk', 
+objects = ('overweight', 'obesity', 'chronic disease', 'hi blood pressure', 
     'mental depression', 'low exerise')
 
 y_pos = np.arange(len(objects))
@@ -181,17 +181,17 @@ performance_50 = [corr50['overweight'],corr50['obesity'],corr50['chronic disease
 performance_100 = [corr100['overweight'],corr100['obesity'],corr100['chronic disease risk'],
     corr100['high blood pressure risk'],corr100['mental depression'],corr100['low exerise']]
 
-plt.figure(figsize=(8,11))
+plt.figure(figsize=(12,10))
 
 plt.subplot(1, 2, 1)
 plt.bar(y_pos, performance_50, align='center', alpha=0.5)
-plt.xticks(y_pos, objects)
+plt.xticks(y_pos, objects, rotation = 45)
 plt.ylabel('correlation rate')
 plt.title('Correlation with food_50')
 
 plt.subplot(1, 2, 2)
 plt.bar(y_pos, performance_100, align='center', alpha=0.5)
-plt.xticks(y_pos, objects)
+plt.xticks(y_pos, objects, rotation = 45)
 plt.ylabel('correlation rate')
 plt.title('Correlation with food_100')
 
@@ -201,7 +201,7 @@ plt.savefig('correlation_bar.png')
 objects=['Sydney','Melbourne','Adelaide','Brisbane']
 y_pos = np.arange(len(objects))
 
-plt.figure(figsize=(8,11))
+plt.figure(figsize=(10,11))
 
 plt.subplot(3, 2, 1)
 plt.bar(y_pos, overweight, align='center', alpha=0.5)
@@ -219,13 +219,13 @@ plt.subplot(3, 2, 3)
 plt.bar(y_pos, chronic_disease_risk, align='center', alpha=0.5)
 plt.xticks(y_pos, objects)
 plt.ylabel('Rate (100%)')
-plt.title('Chronic Disease Risk Rate in four cities')
+plt.title('Chronic Disease Rate in four cities')
 
 plt.subplot(3, 2, 4)
 plt.bar(y_pos, hi_blood_pressure_risk, align='center', alpha=0.5)
 plt.xticks(y_pos, objects)
 plt.ylabel('Rate (100%)')
-plt.title('High Blood Pressure Risk Rate in four cities')
+plt.title('High Blood Pressure Rate in four cities')
 
 plt.subplot(3, 2, 5)
 plt.bar(y_pos, psy_distress, align='center', alpha=0.5)
@@ -259,8 +259,9 @@ def data_plot(aurin_raw_data, city_list):
 plot_aurin_plot = data_plot(aurin_raw_data, city_list)
 topics = list(plot_aurin_plot.keys())
 
+fog_labels = ('obesity', 'chronic disease', 'high blood pressure', 'low exerise',
+    'mental depression',  'overweight')
 colors = ['red', 'green', 'blue', 'orange']
-
 fig, ax = plt.subplots()
 for i in range(len(city_list)):
     for topic in topics:
@@ -269,6 +270,7 @@ for i in range(len(city_list)):
             ax.scatter(topic, y, c=colors[i], label=city_list[i], alpha=0.3, edgecolors='none')
         else:
             ax.scatter(topic, y, c=colors[i], alpha=0.3, edgecolors='none')
-
+ax.set_xticklabels(fog_labels, rotation = 10)
+ax.set_ylabel("ratio(100%)")
 plt.legend()
 plt.savefig('aurin.png')

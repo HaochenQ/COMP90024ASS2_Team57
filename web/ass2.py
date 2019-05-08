@@ -5,6 +5,7 @@ import json
 import matplotlib.pyplot as plt
 from flask_httpauth import HTTPBasicAuth
 app = Flask(__name__)
+auth = HTTPBasicAuth()
 user = 'admin'
 passwd = 'admin'
 
@@ -78,18 +79,26 @@ def unauthorized():
     # return 403 instead of 401 to prevent browsers from displaying the default auth dialog
 
 @app.errorhandler(400)
-def not_found(error):
+def bad_request(error):
     return make_response(jsonify({'error': 'Bad request'}), 400)
 
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+def make_tasks(data):
+    # turn a dictionary into a list of dictionaries so that is can be shown as a json object
+    # and can be obtained by 'curl' command
+    new_tasks = []
+    for key in data:
+        task = {}
+        task['city'] = key
+        task['url'] = "http://127.0.0.1:5984/twitter/api/tasks/" + key
+        task['total_twitter'] = data[key]['total_twitter']
+        new_tasks.append(task)
+    return new_tasks
 
-tasks = []
-for doc in data:
-    doc['url'] = "http://127.0.0.1:5984/twitter/api/tasks/" + doc['city']
-    tasks.append(doc)
+tasks = make_tasks(data)
 
 # get all twitters
 @app.route('/twitter/api/tasks', methods=['GET'])
@@ -118,6 +127,7 @@ def create_task():
         abort(400)
     task = {
         'city': request.json['city'],
+        'url': "http://127.0.0.1:5984/twitter/api/tasks/" + request.json['city'],
         'total_twitter': request.json.get('total_twitter', ""),
     }
     tasks.append(task)
@@ -130,16 +140,16 @@ def create_task():
 def update_task(task_id):
     task = -1
     for i in range(len(tasks)):
-        if task_id == tasks[i]['key']:
+        if task_id == tasks[i]['city']:
             task = i
             break
     if task == -1:
         abort(404)
     if not request.json:
         abort(400)
-    if 'city' in request.json and type(request.json['city']) != unicode:
+    if 'city' in request.json and type(request.json['city']) != str:
         abort(400)
-    if 'total_twitter' in request.json and type(request.json['total_twitter']) is not unicode:
+    if 'total_twitter' in request.json and type(request.json['total_twitter']) != int:
         abort(400)
     tasks[task]['city'] = request.json.get('city', tasks[task]['city'])
     tasks[task]['total_twitter'] = request.json.get(
@@ -161,6 +171,206 @@ def delete_task(task_id):
     # db.delete(tasks[task])
     return jsonify({'result': True})
 
+#  ------------------- API for grabing aurin data ------------------
+def make_analysis_tasks(data):
+    # turn a dictionary into a list of dictionaries so that is can be shown as a json object
+    # and can be obtained by 'curl' command
+    for doc in data:
+        doc.pop('_rev')
+        doc['_id'] = doc['_id'].replace(' ', '_')
+        doc['url'] = "http://127.0.0.1:5984/twitter/api/aurin_tasks/" + doc['_id']
+    return data
+
+# locate to certain database
+db_aurin = couch['aurin']
+
+# all docs including views
+rows_aurin = db_aurin.view('_all_docs', include_docs=True)
+
+# transfer couchdb object to a list, each list contains a dictionary
+raw_data_aurin = [row['doc'] for row in rows_aurin]
+tasks_aurin = make_analysis_tasks(raw_data_aurin)
+
+# get all aurin data
+@app.route('/twitter/api/aurin_tasks', methods=['GET'])
+@auth.login_required
+def get_aurin_tasks():
+    return jsonify({'tasks': tasks_aurin})
+
+@app.route('/twitter/api/aurin_tasks/<string:task_id>', methods=['GET'])
+@auth.login_required
+def get_aurin_task(task_id):
+    task = -1
+    for i in range(len(tasks_aurin)):
+        if task_id == tasks_aurin[i]['_id']:
+            task = i
+            break
+    if task == -1:
+        abort(404)
+    return jsonify({'task': tasks_aurin[task]})
+
+
+@app.route('/twitter/api/aurin_tasks', methods=['POST'])
+@auth.login_required
+def create_aurin_task():
+    if not request.json or not '_id' in request.json:
+        abort(400)
+    task = {
+        '_id': request.json['_id'].replace(' ', '_'),
+        'url': "http://127.0.0.1:5984/twitter/api/aurin_tasks/" + request.json['_id'].replace(' ', '_'),
+        'Sydney': request.json.get('Sydney', ""),
+        'Melbourne': request.json.get('Melbourne', ""),
+        'Brisbane': request.json.get('Brisbane', ""),
+        'Adelaide': request.json.get('Adelaide', ""),
+    }
+    tasks_aurin.append(task)
+    # db.save(task)
+    return jsonify({'task': tasks_aurin}), 201
+
+
+@app.route('/twitter/api/aurin_tasks/<string:task_id>', methods=['PUT'])
+@auth.login_required
+def update_aurin_task(task_id):
+    task = -1
+    for i in range(len(tasks_aurin)):
+        if task_id == tasks_aurin[i]['_id']:
+            task = i
+            break
+    if task == -1:
+        abort(404)
+    if not request.json:
+        abort(400)
+    if '_id' in request.json and type(request.json['_id']) != str:
+        abort(400)
+    if 'Sydney' in request.json and type(request.json['Sydney']) != float:
+        abort(400)
+    if 'Melbourne' in request.json and type(request.json['Melbourne']) != float:
+        abort(400)
+    if 'Brisbane' in request.json and type(request.json['Brisbane']) != float:
+        abort(400)
+    if 'Adelaide' in request.json and type(request.json['Adelaide']) != float:
+        abort(400)                
+    tasks_aurin[task]['_id'] = request.json.get('_id', tasks_aurin[task]['_id']).replace(' ', '_')
+    tasks_aurin[task]['Sydney'] = request.json.get('Sydney', tasks_aurin[task]['Sydney'])
+    tasks_aurin[task]['Melbourne'] = request.json.get('Melbourne', tasks_aurin[task]['Melbourne'])   
+    tasks_aurin[task]['Brisbane'] = request.json.get('Brisbane', tasks_aurin[task]['Brisbane'])
+    tasks_aurin[task]['Adelaide'] = request.json.get('Adelaide', tasks_aurin[task]['Adelaide'])                    
+    return jsonify({'task': tasks_aurin[task]})
+
+
+@app.route('/twitter/api/aurin_tasks/<string:task_id>', methods=['DELETE'])
+@auth.login_required
+def delete_aurin_task(task_id):
+    task = -1
+    for i in range(len(tasks_aurin)):
+        if task_id == tasks_aurin[i]['_id']:
+            task = i
+            break
+    if task == -1:
+        abort(404)
+    tasks_aurin.remove(tasks_aurin[task])
+    # db.delete(tasks[task])
+    return jsonify({'result': True})
+
+#  ------------------- API for grabing correlation results------------------
+# locate to certain database
+db_analysis = couch['analysis_result']
+
+# all docs including views
+rows_analysis = db_analysis.view('_all_docs', include_docs=True)
+
+# transfer couchdb object to a list, each list contains a dictionary
+raw_data_analysis = [row['doc'] for row in rows_analysis]
+tasks_analysis = make_analysis_tasks(raw_data_analysis)
+
+# get all aurin data
+@app.route('/twitter/api/analysis_tasks', methods=['GET'])
+@auth.login_required
+def get_analysis_tasks():
+    return jsonify({'tasks': tasks_analysis})
+
+@app.route('/twitter/api/analysis_tasks/<string:task_id>', methods=['GET'])
+@auth.login_required
+def get_analysis_task(task_id):
+    task = -1
+    for i in range(len(tasks_analysis)):
+        if task_id == tasks_analysis[i]['_id']:
+            task = i
+            break
+    if task == -1:
+        abort(404)
+    return jsonify({'task': tasks_analysis[task]})
+
+
+@app.route('/twitter/api/analysis_tasks', methods=['POST'])
+@auth.login_required
+def create_analysis_task():
+    if not request.json or not '_id' in request.json:
+        abort(400)
+    task = {
+        '_id': request.json['_id'].replace(' ', '_'),
+        'url': "http://127.0.0.1:5984/twitter/api/analysis_tasks/" + request.json['_id'].replace(' ', '_'),
+        'chronic disease risk': request.json.get('chronic disease risk', ""),
+        'high blood pressure risk': request.json.get('high blood pressure risk', ""),
+        'low exerise': request.json.get('low exerise', ""),
+        'mental depression': request.json.get('mental depression', ""),
+        'obesity': request.json.get('obesity', ""),
+        'overweight': request.json.get('overweight', ""),
+    }
+    tasks_analysis.append(task)
+    # db.save(task)
+    return jsonify({'task': tasks_analysis}), 201
+
+
+@app.route('/twitter/api/analysis_tasks/<string:task_id>', methods=['PUT'])
+@auth.login_required
+def update_analysis_task(task_id):
+    task = -1
+    for i in range(len(tasks_analysis)):
+        if task_id == tasks_analysis[i]['_id']:
+            task = i
+            break
+    if task == -1:
+        abort(404)
+    if not request.json:
+        abort(400)
+    if '_id' in request.json and type(request.json['_id']) != str:
+        abort(400)
+    if 'chronic disease risk' in request.json and type(request.json['chronic disease risk']) != float:
+        abort(400)
+    if 'high blood pressure risk' in request.json and type(request.json['high blood pressure risk']) != float:
+        abort(400)
+    if 'low exerise' in request.json and type(request.json['low exerise']) != float:
+        abort(400)
+    if 'mental depression' in request.json and type(request.json['mental depression']) != float:
+        abort(400)  
+    if 'obesity' in request.json and type(request.json['obesity']) != float:
+        abort(400)  
+    if 'overweight' in request.json and type(request.json['overweight']) != float:
+        abort(400)                                
+    tasks_analysis[task]['_id'] = request.json.get('_id', tasks_analysis[task]['_id']).replace(' ', '_')
+    tasks_analysis[task]['chronic disease risk'] = request.json.get('chronic disease risk', tasks_analysis[task]['chronic disease risk'])
+    tasks_analysis[task]['high blood pressure risk'] = request.json.get('high blood pressure risk', tasks_analysis[task]['high blood pressure risk'])   
+    tasks_analysis[task]['low exerise'] = request.json.get('low exerise', tasks_analysis[task]['low exerise'])
+    tasks_analysis[task]['mental depression'] = request.json.get('mental depression', tasks_analysis[task]['mental depression'])  
+    tasks_analysis[task]['obesity'] = request.json.get('obesity', tasks_analysis[task]['obesity'])    
+    tasks_analysis[task]['overweight'] = request.json.get('overweight', tasks_analysis[task]['overweight'])                              
+    return jsonify({'task': tasks_analysis[task]})
+
+
+@app.route('/twitter/api/analysis_tasks/<string:task_id>', methods=['DELETE'])
+@auth.login_required
+def delete_analysis_task(task_id):
+    task = -1
+    for i in range(len(tasks_analysis)):
+        if task_id == tasks_analysis[i]['_id']:
+            task = i
+            break
+    if task == -1:
+        abort(404)
+    tasks_analysis.remove(tasks_analysis[task])
+    # db.delete(tasks[task])
+    return jsonify({'result': True})
 
 if __name__ == '__main__':
 	app.run(debug=True)
