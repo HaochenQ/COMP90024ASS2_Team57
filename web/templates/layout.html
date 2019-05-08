@@ -2,9 +2,6 @@
 <html>
 <head>
     <header class="py-3 bg-dark">
-	<a href="#" class="sidebar-toggler position-absolute m-2 bg-white d-block d-md-none" data-toggle="collapse" data-target="#sidebar-main" aria-controls="sidebar-main" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="sidebar-toggler-icon"></span>
-	</a>
 	<h1 class="text-center text-white">Comp90024 Assignment 4: group 57</h1>
 	</header>
 	<!-- Required meta tags -->
@@ -16,9 +13,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-	<div class = "test">
-	{% block content %}{% endblock %}
-		<img class = "image" src="{% block image %}{% endblock %}" alt="description" style="width: 50%;border: 1px solid #ddd;border-radius: 4px;padding: 5px;display: block;margin-left: auto;margin-right: auto;">
+	<div class = "test" style="padding-top: 20px;">
+	 <h2 class="text-center">{% block content %}{% endblock %}</h2>
+	<img class = "image" src="{% block image %}{% endblock %}" alt="description" style="width: 50%;border: 1px solid #ddd;border-radius: 4px;padding: 5px;display: block;margin-left: auto;margin-right: auto; ">
 	</div>
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

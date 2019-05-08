@@ -48,23 +48,65 @@ raw_data = [row['doc'] for row in rows]
 # collect all required data into one dictionary
 data = getDataFromCouchDB(raw_data)
 
-# so can access home page though two paths
+# can access home page though two paths
+# first page & login page
 @app.route("/")
 @app.route("/login")
 def login():
     return render_template('login.html')
 
+# home page
 @app.route("/home")
 def home():
     return render_template('home.html')
 
+# web page that shows the total crawled twitter number
 @app.route("/twitter")
 def twitter():
     return render_template('twitter.html', data = json.dumps(data))
 
-@app.route("/about")
-def about():
-    return render_template('about.html', title = "About")
+# --------------- pages that shows analysis ---------------------
+def find_attchment_url(rows):
+    # this function is used to find the url from couchdb attachment
+    # connect to database which contains docs with img attachments
+    href_docid = {}  # a disctionary of image urls where id is the key and url is the value
+
+    for i in rows:  # for each id in the db
+        try:
+            attach = i['_attachments']
+            for key in attach:
+                # create a uri and append to a list
+                href_docid[i['_id']] ="http://45.113.235.228:5984/analysis_graph/" + str(i['_id']) + '/' + str(key)
+        except:
+            continue
+    return href_docid
+
+# locate to certain database
+db_graph = couch['analysis_graph']
+
+# all docs including views
+rows_graph = db_graph.view('_all_docs', include_docs=True)
+
+# transfer couchdb object to a list, each list contains a dictionary
+raw_data_graph = [row['doc'] for row in rows_graph]
+
+urls =  find_attchment_url(raw_data_graph)
+
+
+# web page that shows data grabed from aurin
+@app.route("/aurin")
+def aurin():
+    return render_template('aurin.html', url = urls['aurin'])
+
+# web page that shows all disease rates in four cities
+@app.route("/rates")
+def rates():
+    return render_template('rates.html', url = urls['all_rates_in_four_cities'])
+
+# web page that shows all correlation results
+@app.route("/correlation")
+def correlation():
+    return render_template('correlation.html', url = urls['correlation_rates'])
 
 # --------------------- Restful API ------------------------
 @auth.get_password
