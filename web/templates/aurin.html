@@ -1,8 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
 Aurin Data Analysis
-{% endblock %}
+{% endblock content%}
 
 {% block image %}
-{{url}}
+{{url1}}
+{% endblock image%}
+
+{% block extra %}
+    <div class = "test2" style="padding-top: 20px;">
+	<h2 class="text-center">Aurin Data Analysis</h2>
+	<img class = "image" src="{{url2}}" alt="description" style="width: 80%;border: 1px solid #ddd;border-radius: 4px;padding: 5px;display: block;margin-left: auto;margin-right: auto; ">
+	</div>
 {% endblock %}

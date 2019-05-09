@@ -76,7 +76,7 @@ def find_attchment_url(rows):
             attach = i['_attachments']
             for key in attach:
                 # create a uri and append to a list
-                href_docid[i['_id']] ="http://45.113.235.228:5984/analysis_graph/" + str(i['_id']) + '/' + str(key)
+                href_docid[key] ="http://45.113.235.228:5984/analysis_graph/" + str(i['_id']) + '/' + str(key)
         except:
             continue
     return href_docid
@@ -92,21 +92,25 @@ raw_data_graph = [row['doc'] for row in rows_graph]
 
 urls =  find_attchment_url(raw_data_graph)
 
-
 # web page that shows data grabed from aurin
 @app.route("/aurin")
 def aurin():
-    return render_template('aurin.html', url = urls['aurin'])
+    return render_template('aurin.html', url1 = urls['aurin.png'], url2 = urls['HealthConditin.png'])
 
 # web page that shows all disease rates in four cities
 @app.route("/rates")
 def rates():
-    return render_template('rates.html', url = urls['all_rates_in_four_cities'])
+    return render_template('rates.html', url = urls['rates.png'])
 
 # web page that shows all correlation results
 @app.route("/correlation")
 def correlation():
-    return render_template('correlation.html', url = urls['correlation_rates'])
+    return render_template('correlation.html', url = urls['correlation_bar.png'])
+
+# web page that shows Pearson correlation analysis
+@app.route("/food")
+def food():
+    return render_template('food.html', url1 = urls['Pandas_50.png'], url2 = urls['Pandas_100.png'])
 
 # --------------------- Restful API ------------------------
 @auth.get_password
@@ -135,7 +139,7 @@ def make_tasks(data):
     for key in data:
         task = {}
         task['city'] = key
-        task['url'] = "http://127.0.0.1:5984/twitter/api/tasks/" + key
+        task['url'] = "http://127.0.0.1:5984/twitter/api/twitter_tasks/" + key
         task['total_twitter'] = data[key]['total_twitter']
         new_tasks.append(task)
     return new_tasks
@@ -143,13 +147,13 @@ def make_tasks(data):
 tasks = make_tasks(data)
 
 # get all twitters
-@app.route('/twitter/api/tasks', methods=['GET'])
+@app.route('/twitter/api/twitter_tasks', methods=['GET'])
 @auth.login_required
 def get_tasks():
     return jsonify({'tasks': tasks})
 
 
-@app.route('/twitter/api/tasks/<string:task_id>', methods=['GET'])
+@app.route('/twitter/api/twitter_tasks/<string:task_id>', methods=['GET'])
 @auth.login_required
 def get_task(task_id):
     task = -1
@@ -162,14 +166,14 @@ def get_task(task_id):
     return jsonify({'task': tasks[task]})
 
 
-@app.route('/twitter/api/tasks', methods=['POST'])
+@app.route('/twitter/api/twitter_tasks', methods=['POST'])
 @auth.login_required
 def create_task():
     if not request.json or not 'city' in request.json:
         abort(400)
     task = {
         'city': request.json['city'],
-        'url': "http://127.0.0.1:5984/twitter/api/tasks/" + request.json['city'],
+        'url': "http://127.0.0.1:5984/twitter/api/twitter_tasks/" + request.json['city'],
         'total_twitter': request.json.get('total_twitter', ""),
     }
     tasks.append(task)
@@ -177,7 +181,7 @@ def create_task():
     return jsonify({'task': tasks}), 201
 
 
-@app.route('/twitter/api/tasks/<string:task_id>', methods=['PUT'])
+@app.route('/twitter/api/twitter_tasks/<string:task_id>', methods=['PUT'])
 @auth.login_required
 def update_task(task_id):
     task = -1
@@ -199,7 +203,7 @@ def update_task(task_id):
     return jsonify({'task': tasks[task]})
 
 
-@app.route('/twitter/api/tasks/<string:task_id>', methods=['DELETE'])
+@app.route('/twitter/api/twitter_tasks/<string:task_id>', methods=['DELETE'])
 @auth.login_required
 def delete_task(task_id):
     task = -1
@@ -214,13 +218,13 @@ def delete_task(task_id):
     return jsonify({'result': True})
 
 #  ------------------- API for grabing aurin data ------------------
-def make_analysis_tasks(data):
+def make_analysis_tasks(data, task_name):
     # turn a dictionary into a list of dictionaries so that is can be shown as a json object
     # and can be obtained by 'curl' command
     for doc in data:
         doc.pop('_rev')
         doc['_id'] = doc['_id'].replace(' ', '_')
-        doc['url'] = "http://127.0.0.1:5984/twitter/api/aurin_tasks/" + doc['_id']
+        doc['url'] = "http://127.0.0.1:5984/twitter/api/" + task_name + "/" + doc['_id']
     return data
 
 # locate to certain database
@@ -231,7 +235,7 @@ rows_aurin = db_aurin.view('_all_docs', include_docs=True)
 
 # transfer couchdb object to a list, each list contains a dictionary
 raw_data_aurin = [row['doc'] for row in rows_aurin]
-tasks_aurin = make_analysis_tasks(raw_data_aurin)
+tasks_aurin = make_analysis_tasks(raw_data_aurin, "aurin_tasks")
 
 # get all aurin data
 @app.route('/twitter/api/aurin_tasks', methods=['GET'])
@@ -323,7 +327,7 @@ rows_analysis = db_analysis.view('_all_docs', include_docs=True)
 
 # transfer couchdb object to a list, each list contains a dictionary
 raw_data_analysis = [row['doc'] for row in rows_analysis]
-tasks_analysis = make_analysis_tasks(raw_data_analysis)
+tasks_analysis = make_analysis_tasks(raw_data_analysis, "analysis_tasks")
 
 # get all aurin data
 @app.route('/twitter/api/analysis_tasks', methods=['GET'])
