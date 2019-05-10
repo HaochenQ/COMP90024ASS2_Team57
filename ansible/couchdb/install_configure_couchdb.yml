@@ -1,0 +1,46 @@
+- hosts: all_servers
+  tasks:
+    - name: Install pip
+      become: yes
+      apt:
+        name: ['python-pip']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: install docker
+      become: yes
+      apt:
+        name: ['docker', 'docker-compose']
+        state: present
+
+    - name: pull docker image
+      become: yes
+      docker_image:
+        name: couchdb
+
+    - name: run docker container
+      become: yes
+      docker_container:
+        name: couchdb
+        image: couchdb
+        state: started
+        ports: 5984:5984
+
+    - name: configure cookie in docker container
+      become: yes
+      command: sudo docker exec -it couchdb bash -c "echo \"-setcookie couchdb_cluster\" >> /opt/couchdb/etc/vm.args"
+
+    - name: configure hostname in docker container
+      become: yes
+      command: sudo docker exec -it couchdb bash -c "echo \"-name couchdb@{{ ansible_eth0.ipv4.address }}\" >> /opt/couchdb/etc/vm.args"
+
+    - name: restart docker container
+      become: yes
+      docker_container:
+        name: couchdb
+        state: started
+        restart: yes
+
+    - pip:
+        name: tweepy
