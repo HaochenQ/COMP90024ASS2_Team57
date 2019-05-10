@@ -1,0 +1,43 @@
+- name: Install pip
+  become: yes
+  apt:
+    name: ['python-pip']
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
+# sudo apt-get update; sudo apt-get install python-pip
+
+- name: Update pip
+  become: yes
+  pip: 
+    name: ['pip']
+    state: latest
+# pip install --upgrade pip
+
+- name: Install flask
+  become: yes
+  pip: 
+    name: ['flask']
+    state: latest
+# pip install flask
+
+- name: Install flask_httpauth
+  become: yes
+  pip: 
+    name: ['flask_httpauth']
+    state: latest
+# pip install flask
+
+- name: Install couchdb
+  become: yes
+  pip: 
+    name: ['couchdb']
+    state: latest
+# pip install couchdb
+
+- name: Install requests
+  become: yes
+  pip: 
+    name: ['requests']
+    state: latest
+# pip install requests
