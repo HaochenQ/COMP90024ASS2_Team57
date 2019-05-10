@@ -2,7 +2,6 @@ from flask import Flask, render_template, url_for, jsonify, abort, request, make
 import couchdb
 import requests
 import json
-import matplotlib.pyplot as plt
 from flask_httpauth import HTTPBasicAuth
 app = Flask(__name__)
 auth = HTTPBasicAuth()
