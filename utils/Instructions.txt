@@ -13,7 +13,7 @@ Twitter analysis:
 
 2. Run run_twitter_analysis.sh file to start the ansible, it will:
  (1) install the docker-ce, docker-compose and useful packages. 
- (2) transfer all twitter analysis file to remote instances
+ (2) transfer all twitter analysis files to remote instances
  (3) build the spark using docker
  (4) read docker-compose,yml
 
@@ -42,21 +42,34 @@ Web deploy:
     cd path/to/COMP90024ASS2/ansible/web
     
 2. Run run_twitter_analysis.sh file to start the ansible, it will:
- (1) install the docker-ce, docker-compose and useful packages. 
- (2) transfer all twitter analysis file to remote instances
- (3) build the spark using docker
- (4) read docker-compose,yml
+ (1) install the useful packages. 
+ (2) transfer all web files to remote instances
 
-    sudo ./run_twitter_analysis.sh
+    sudo ./run_web.sh
 
-3. Go to the remote server (in our project it is 45.113.235.188):
+3. Go to the remote server (45.113.235.228) and execute:
     
-    docker exec -ti spark_spark-master_1 /bin/bash
+    python3 ass2.py
 
-in the spark master bash, execute: 
+4. Then open a new terminal and enter:
+
+    4.1 sudo ssh -NT -i path/to/COMP90024ASS2/utils/CCC-keypair.pem -L 5000:localhost:5000 ubuntu@45.113.235.228
+
+        Then the website can be lauched in your localhost and the login page will be rendered. The username and the password are "admin".
     
-    ./bin/spark-submit /root/wa.py --word2vec=True --syms_num=100
+    4.1 curl sentences, then, the ReSTful API can be used. There are three resources: twitter_tasks, aurin_tasks and analysis_tasks. And the sample commands are:
+    
+    Get a whole list of tasks:
+        curl -XGET http://localhost:5000/twitter/api/twitter_tasks --basic --user admin:admin -H "Content-Type: application/json"
+    
+    Get a specific task:
+        curl -XGET http://localhost:5000/twitter/api/twitter_tasks/sydney --basic --user admin:admin -H "Content-Type: application/json"
 
-more arguments refer to parser in code wa.py.
-
-Then the results will be stored in couchdb on server (default in database data_analysis)
+    Create a new task:
+        curl -XPOST http://localhost:5000/twitter/api/twitter_tasks --basic --user admin:admin -H "Content-Type: application/json" -d '{"city":"cairns"}'
+    
+    Update a task:
+        curl -XPUT http://localhost:5000/twitter/api/twitter_tasks/cairns --basic --user admin:admin -H "Content-Type: application/json" -d '{"city":"Cairns", "total_twitter": 50}'
+    
+    Delete a task:
+        curl -XDELETE http://localhost:5000/twitter/api/twitter_tasks/cairns --basic --user admin:admin -H "Content-Type: application/json"
