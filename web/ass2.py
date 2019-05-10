@@ -1,3 +1,7 @@
+# Created by Tiantong Li
+# Uni id: 1037952
+# Email address is tiantongl1@student.unimelb.edu.au
+
 from flask import Flask, render_template, url_for, jsonify, abort, request, make_response
 import couchdb
 import requests
