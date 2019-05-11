@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 import json
@@ -76,9 +77,33 @@ couchserver = couchdb.Server('http://%s:%s@45.113.235.228:5984/'%(user,passwd))
 db_twitter = couchserver['data_analysis']
 db_aurin = couchserver['aurin']
 
+
+# plot aurin data
+
+N = 6
+sydney = (33.781,25.15, 56.725, 21.719, 10.944,65.088)
+melbourne = (33.288,21.6,52.013,21.012,10.575,55.787)
+adelaide = (18.0,14.05,30.3,12.1,7.05,33.45)
+brisbane = (26.275,20.675,47.375,18.55,9.1,51.0)
+ind = np.arange(N)
+width = 0.20
+plt.bar(ind, sydney, width, label='sydney')
+plt.bar(ind + width, melbourne, width, label='melbourne')
+plt.bar(ind + 2*width, adelaide, width, label='adelaide')
+plt.bar(ind + 3*width, brisbane, width, label='brisbane')
+
+
+plt.ylabel('ratio of people',size=12)
+plt.title('Health Condition in Four Cities',size=18)
+
+plt.xticks(ind + width*1.5 , ('overweight','obesity','chronic disease risk',
+       'high blood pressure','mental depression','low exercise'),rotation=-30,size = 12)
+plt.legend(loc='best')
+plt.show()
+
 # upload aurin data into couchdb
 
-'''try:
+try:
     db_aurin['ratio of overWeight'] = printt(overweight)
     db_aurin['ratio obesity'] = printt(obseity)
     db_aurin['ratio of chronic_disease_risk'] = printt(chronic_disease_risk)
@@ -86,7 +111,7 @@ db_aurin = couchserver['aurin']
     db_aurin['ratio of mental_depression'] = printt(psy_distress)
     db_aurin['ratio of low_exercise'] = printt(lo_exercise)
 except:
-    print("fail to upload")'''
+    print("\ndatabases already exists")
 
 # retrieve data from couchdb
 food20={}
@@ -128,7 +153,7 @@ print('food_50:',food50)
 print('food_100:',food100)
 print('food_200:',food200)
 
-# analysis of correlation
+# analysis of correlation with nump corrcoef
 def calculateCorr(list):
     dic = {}
     overweightCor = round(np.corrcoef(overweight,list)[0,1],3)
@@ -162,11 +187,54 @@ print('\nfood_200:')
 calculateCorr(food_200)
 
 # upload correlation result
-db_result = couchserver['analysis_result']
+'''db_result = couchserver['analysis_result']
 try:
     db_result['correlation_food20'] = calculateCorr(food_20)
     db_result['correlation_food50'] = calculateCorr(food_50)
     db_result['correlation_food100'] = calculateCorr(food_100)
     db_result['correlation_food200'] = calculateCorr(food_200)
 except:
-    print("already exists")
+    print("\ndbs already exists")'''
+
+# analytics with pandas
+dataset = pd.DataFrame({'ratio of overweight':overweight,'ratio of obesity':obseity,'ratio chronic disease':chronic_disease_risk,
+                        'ratio of high blood pressure':hi_blood_pressure_risk,'ratio of mental depression':psy_distress,
+                        'ratio of low exercise':lo_exercise,'ratio of food tweets(50)':food_50})
+
+dataset.corr('kendall')
+dataset.corr('spearman')
+print(dataset.corr()) # pearson
+
+correlations = dataset.corr()
+# plot correlation matrix
+names=['overweight','obesity','low exercise','chronic disease risk',
+       'high blood pressure','mental depression','glutton tweets(50)']
+fig = plt.figure()
+ax = fig.add_subplot(111)
+cax = ax.matshow(correlations, vmin=0, vmax=1,cmap="magma") #
+fig.colorbar(cax)
+ticks = np.arange(0,7,1)
+ax.set_xticks(ticks)
+ax.set_yticks(ticks)
+ax.set_xticklabels(names,rotation=90,size=11)
+ax.set_yticklabels(names,size=11)
+ax.set_title('Correlation Matrix(50 words)',y=-0.09)
+plt.show()
+
+
+# plot Bar chart of corrlation
+import matplotlib.pyplot as plt; plt.rcdefaults()
+import numpy as np
+import matplotlib.pyplot as plt
+
+objects = ('overweight','obesity','chronic disease risk',
+       'high blood pressure','mental depression','no/low exercise')
+y_pos = np.arange(len(objects))
+performance = [0.669, 0.506, 0.625, 0.695, 0.638, 0.515]
+
+plt.barh( y_pos, performance, height= 0.5, align='center', alpha=0.5, color='#000080')
+plt.yticks(y_pos, objects,size=11)
+plt.xlabel('Correlation coefficient',size=11)
+plt.title('Correlation coefficients between \n glutton tweets(100 words) and health problems',size=13)
+
+plt.show()
