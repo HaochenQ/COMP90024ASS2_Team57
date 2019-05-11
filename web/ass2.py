@@ -116,7 +116,7 @@ rows_graph = db_graph.view('_all_docs', include_docs=True)
 raw_data_graph = [row['doc'] for row in rows_graph]
 
 urls =  find_attchment_url(raw_data_graph)
-print(urls)
+
 # web page that shows data grabed from aurin
 @app.route("/aurin")
 def aurin():
