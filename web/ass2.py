@@ -116,26 +116,16 @@ rows_graph = db_graph.view('_all_docs', include_docs=True)
 raw_data_graph = [row['doc'] for row in rows_graph]
 
 urls =  find_attchment_url(raw_data_graph)
-
+print(urls)
 # web page that shows data grabed from aurin
 @app.route("/aurin")
 def aurin():
-    return render_template('aurin.html', url1 = urls['aurin.png'], url2 = urls['HealthConditin.png'])
-
-# web page that shows all disease rates in four cities
-@app.route("/rates")
-def rates():
-    return render_template('rates.html', url = urls['rates.png'])
-
-# web page that shows all correlation results
-@app.route("/correlation")
-def correlation():
-    return render_template('correlation.html', url = urls['correlation_bar.png'])
+    return render_template('aurin.html', url = urls['HealthCondition.png'])
 
 # web page that shows Pearson correlation analysis
 @app.route("/food")
 def food():
-    return render_template('food.html', url1 = urls['Pandas_50.png'], url2 = urls['Pandas_100.png'])
+    return render_template('food.html', url1 = urls['Pandas_50.png'], url2 = urls['Pandas_100.png'],url3 = urls['correlation_bar.png'])
 
 # --------------------- Restful API ------------------------
 @auth.get_password
