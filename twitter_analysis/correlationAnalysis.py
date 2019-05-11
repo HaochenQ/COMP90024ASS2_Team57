@@ -78,7 +78,7 @@ db_aurin = couchserver['aurin']
 
 # upload aurin data into couchdb
 
-'''try:
+try:
     db_aurin['ratio of overWeight'] = printt(overweight)
     db_aurin['ratio obesity'] = printt(obseity)
     db_aurin['ratio of chronic_disease_risk'] = printt(chronic_disease_risk)
@@ -86,7 +86,7 @@ db_aurin = couchserver['aurin']
     db_aurin['ratio of mental_depression'] = printt(psy_distress)
     db_aurin['ratio of low_exercise'] = printt(lo_exercise)
 except:
-    print("fail to upload")'''
+    print("fail to upload")
 
 # retrieve data from couchdb
 food20={}
