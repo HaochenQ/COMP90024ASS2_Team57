@@ -1,2 +1,4 @@
 flask
+couchdb
+requests
 flask_httpauth
