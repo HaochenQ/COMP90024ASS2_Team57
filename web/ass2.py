@@ -12,6 +12,21 @@ auth = HTTPBasicAuth()
 user = 'admin'
 passwd = 'admin'
 
+def find_attchment_url(rows):
+    # this function is used to find the url from couchdb attachment
+    # connect to database which contains docs with img attachments
+    href_docid = {}  # a disctionary of image urls where id is the key and url is the value
+
+    for i in rows:  # for each id in the db
+        try:
+            attach = i['_attachments']
+            for key in attach:
+                # create a uri and append to a list
+                href_docid[key] ="http://45.113.235.228:5984/analysis_graph/" + str(i['_id']) + '/' + str(key)
+        except:
+            continue
+    return href_docid
+
 def getDataFromCouchDB(data):
     # this function will convert a list of dictionaries obtained from couchDB into a dictionary
     # which contains all required information for analysis
@@ -29,12 +44,33 @@ def getDataFromCouchDB(data):
             continue
     return dic
 
+def make_tasks(data):
+    # turn a dictionary into a list of dictionaries so that is can be shown as a json object
+    # and can be obtained by 'curl' command
+    new_tasks = []
+    for key in data:
+        task = {}
+        task['city'] = key
+        task['url'] = "http://127.0.0.1:5984/twitter/api/twitter_tasks/" + key
+        task['total_twitter'] = data[key]['total_twitter']
+        new_tasks.append(task)
+    return new_tasks
+
 try:
     couch = couchdb.Server('http://%s:%s@45.113.235.228:5984/'%(user,passwd))
 except:
     print("Cannot find CouchDB Server ... Exiting")
     print("----_Stack Trace_-----")
     raise
+
+def make_analysis_tasks(data, task_name):
+    # turn a dictionary into a list of dictionaries so that is can be shown as a json object
+    # and can be obtained by 'curl' command
+    for doc in data:
+        doc.pop('_rev')
+        doc['_id'] = doc['_id'].replace(' ', '_')
+        doc['url'] = "http://127.0.0.1:5984/twitter/api/" + task_name + "/" + doc['_id']
+    return data
     
 # couchdb username and password
 couch.resource.credentials = ('admin', 'admin')
@@ -69,20 +105,6 @@ def twitter():
     return render_template('twitter.html', data = json.dumps(data))
 
 # --------------- pages that shows analysis ---------------------
-def find_attchment_url(rows):
-    # this function is used to find the url from couchdb attachment
-    # connect to database which contains docs with img attachments
-    href_docid = {}  # a disctionary of image urls where id is the key and url is the value
-
-    for i in rows:  # for each id in the db
-        try:
-            attach = i['_attachments']
-            for key in attach:
-                # create a uri and append to a list
-                href_docid[key] ="http://45.113.235.228:5984/analysis_graph/" + str(i['_id']) + '/' + str(key)
-        except:
-            continue
-    return href_docid
 
 # locate to certain database
 db_graph = couch['analysis_graph']
@@ -134,18 +156,6 @@ def bad_request(error):
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
-
-def make_tasks(data):
-    # turn a dictionary into a list of dictionaries so that is can be shown as a json object
-    # and can be obtained by 'curl' command
-    new_tasks = []
-    for key in data:
-        task = {}
-        task['city'] = key
-        task['url'] = "http://127.0.0.1:5984/twitter/api/twitter_tasks/" + key
-        task['total_twitter'] = data[key]['total_twitter']
-        new_tasks.append(task)
-    return new_tasks
 
 tasks = make_tasks(data)
 
@@ -221,14 +231,6 @@ def delete_task(task_id):
     return jsonify({'result': True})
 
 #  ------------------- API for grabing aurin data ------------------
-def make_analysis_tasks(data, task_name):
-    # turn a dictionary into a list of dictionaries so that is can be shown as a json object
-    # and can be obtained by 'curl' command
-    for doc in data:
-        doc.pop('_rev')
-        doc['_id'] = doc['_id'].replace(' ', '_')
-        doc['url'] = "http://127.0.0.1:5984/twitter/api/" + task_name + "/" + doc['_id']
-    return data
 
 # locate to certain database
 db_aurin = couch['aurin']

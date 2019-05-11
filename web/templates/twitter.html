@@ -20,9 +20,11 @@
   <body>
   	<div class="container" style="padding-top: 20px">
     <h2 class="text-center">Total number of harvested twitters</h2>
-    <div id="map" style="width:100%; height:470px;"></div>
-    <script>
+    <div id="map" style="width:100%; height:470px;"></div> <!-- add map-->
 
+    <!-- javascript codes-->
+    <script>
+    //define the style of the map
     var mapStyle = [{
         'stylers': [{'visibility': 'on'}] //off makes the whole map white
       }, {
@@ -34,6 +36,8 @@
         'elementType': 'geometry',
         'stylers': [{'visibility': 'on'}, {'color': '#bfd4ff'}]
       }];
+
+      //some variables
       var map;
       var sydney;
       var melbourne;
@@ -42,7 +46,6 @@
       var infoWindow;
 
       function initMap() {
-
         // load the map
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -33, lng: 143},
@@ -50,20 +53,20 @@
           styles: mapStyle
         });
 
-        // bounding boxes of filtering twitter
-	    sydney = new google.maps.Rectangle({
-	  	strokeColor: '#FF0000',
-	    strokeOpacity: 0.8,
-	    strokeWeight: 2,
-	    fillColor: '#FF0000',
-	    fillOpacity: 0.35,
-	      bounds: {
-	      	north: -33.5780,
-		      south: -34.1399,
-		      east: 151.3439,
-		      west: 150.6396
-	      }
-	    });
+        // bounding boxes of filtering tweets
+        sydney = new google.maps.Rectangle({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+          bounds: {
+            north: -33.5780,
+            south: -34.1399,
+            east: 151.3439,
+            west: 150.6396
+          }
+        });
 
         melbourne = new google.maps.Rectangle({
 		    strokeColor: '#F000F0',
@@ -122,6 +125,7 @@
 
       }
 
+      // define the function of showing the information window when the mouse move over the bounding box
       function rectangleClickEvent(rectangle, name){
       	rectangle.addListener('mouseover', function(event){
      	  var ne = rectangle.getBounds().getNorthEast();
@@ -140,6 +144,7 @@
       }
 
     </script>
+    <!--reference to Google map, including a Google map API key-->
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATY1V9k8bfOyYD7zv3EQT7tUNNyuuXQl8&callback=initMap">
     </script>

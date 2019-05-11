@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Required meta tags -->
 <meta charset="utf-8">
-
+<!-- reference stylesheet-->
 <link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename='login.css') }}" />
 </head>
 <body>
@@ -40,20 +40,27 @@
   </div>
 </form>
 
-<script type="text/javascript">
+<!-- javascript code-->
+<script type="text/javascript"> 
+
+// check if the username and the password are correct
   function check(form){
+    // if the username and the password are correct, then direct to the home page
     if (form.uname.value =="admin" && form.psw.value == "admin"){
       window.open('home');
     }
+    // if the username or the password are incorrect, then reload the login page
     else{
       alert("invalid username or wrong password");
       location.href = "/login";
     }
 
   }
+  // if click cancel button, then reload the login page
   document.getElementById("cancel").onclick = function () {
         location.href = "/login";
       }
+  // if click forget button, then give a hint
   document.getElementById("forget").onclick = function () {
         alert("check intruction!! Hint: admin.")
       }
