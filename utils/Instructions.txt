@@ -1,6 +1,6 @@
 VM:
 1. Go to COMP90024ASS2/ansible/instances
-2. Run run-nectar.sh, password can be found in password&profile.txt
+2. Run run-nectar.sh, password can be found in COMP90024ASS2/ansible/instances/password&profile.txt
 ---------------------------------------------------------------------------
 Couchdb:
 1. Go to COMP90024ASS2/ansible/couchdb
@@ -8,7 +8,8 @@ Couchdb:
   1) install docker 
   2) install couchdb via docker 
   3) configure couchdb(change hostname and set cookies)
-3. To join nodes into cluster, either getting it done by loging into Fauxton(a GUI for couchdb database management, this method is the preferred methods in official documentation) or by running couchdb_joincluster.sh.
+3. To join nodes into cluster, either getting it done by loging into Fauxton
+(a GUI for couchdb database management, this method is the preferred methods in official documentation) or by running couchdb_joincluster.sh.
 
 ---------------------------------------------------------------------------
 Twitter analysis:
