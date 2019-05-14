@@ -2,7 +2,8 @@ import couchdb
 import sys
 import re
 import string
-from pyspark.mllib.feature import Word2Vec, SparkContext
+from pyspark.mllib.feature import Word2Vec 
+from pyspark import SparkContext
 import pickle as pk
 import argparse
 import numpy as np
