@@ -1,22 +1,12 @@
-'''# test pearson correlation
-list1=[500,800,380,270]
-list2=[200,300,100,80]
-print(np.corrcoef(list1, list2)[0,1])
-#matplotlib inline
-#matplotlib.style.use('ggplot')
-#plt.scatter(list1, list2)
-#plt.show()
+"""
+Team: 57
+Yixin Su (731067, yixins1@student.unimelb.edu.au)
+Guoen Jin (935833, guoenj@student.unimelb.edu.au)
+Tiantong Li (1037952, tiantongl1@student.unimelb.edu.au)
+Haikuan Liu (1010887, haikuanl@student.unimelb.edu.au)
+Haochen Qi (964325, hqq@student.unimelb.edu.au)
+"""
 
-x=(list)(np.random.randint(0,50,1000))
-y=(list)(x+np.random.randint(0,50,1000))
-np.corrcoef(x, y)
-print(np.corrcoef(x, y)[0,1])
-#matplotlib inline
-matplotlib.style.use('ggplot')
-plt.xlabel('location')                 # plt.xlabel x axis
-plt.ylabel('population)')
-plt.scatter(x, y)
-plt.show()'''
 import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 import matplotlib.pyplot as plt

@@ -1,29 +1,12 @@
-'''from mpl_toolkits.mplot3d import axes3d
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib import style
-style.use('ggplot')
+"""
+Team: 57
+Yixin Su (731067, yixins1@student.unimelb.edu.au)
+Guoen Jin (935833, guoenj@student.unimelb.edu.au)
+Tiantong Li (1037952, tiantongl1@student.unimelb.edu.au)
+Haikuan Liu (1010887, haikuanl@student.unimelb.edu.au)
+Haochen Qi (964325, hqq@student.unimelb.edu.au)
+"""
 
-fig = plt.figure()
-ax1 = fig.add_subplot(111, projection='3d')
-
-x3 = [1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4]
-y3 = [1,2,3,4,5,6,1,2,3,4,5,6,1,2,3,4,5,6,1,2,3,4,5,6]
-z3 = np.zeros(24)
-
-dx = np.ones(24)
-dy = np.ones(24)
-dz = [33.781,25.15,65.088,56.725,21.719,10.944,33.288,21.6,55.787,52.013,21.012,10.575,18.0,14.05,33.45,30.3,12.2,7.05,26.275,20.675,51.0,47.375,18.55,9.1]
-
-ax1.bar3d(x3, y3, z3, dx, dy, dz)
-
-
-ax1.set_xlabel(['sydney','melbourne','adelaide','brisbane'])
-ax1.set_ylabel(['ratio of overweight','ratio of obesity','ratio of low exercise','ratio chronic disease risk',
-       'ratio of high blood pressure risk','ratio of mental depression'])
-
-
-plt.show()'''
 import numpy as np
 import matplotlib.pyplot as plt
 
