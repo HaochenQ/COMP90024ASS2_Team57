@@ -11,7 +11,7 @@
 
 - name: run docker build for spark
   become: yes
-  command: docker build --tag spark-2:2.4.1 twitter_analysis/spark/spark-2 
+  command: docker build --tag spark-2:2.4.1 twitter_analysis/find_twitter/spark-2 
 
 
 #- name: Run a script with arguments
