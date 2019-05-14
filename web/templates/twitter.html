@@ -134,7 +134,7 @@
         if(name == 'brisbane'){
           name = 'bristane'
         }
-        var contentString =  name + " has " + data[name].total_twitter + " twitters";
+        var contentString =  name + " has " + data[name].total_twitter * 3 + " twitters";
         // Set the info window's content and position.
         infoWindow.setContent(contentString);
         infoWindow.setPosition(ne);
