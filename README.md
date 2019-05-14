@@ -1,10 +1,10 @@
-#Instructions:
+# Instructions:
 
-VM:
+## VM:
 1. Go to COMP90024ASS2/ansible/instances
 2. Run run-nectar.sh, password can be found in COMP90024ASS2/ansible/instances/password&profile.txt
 ---------------------------------------------------------------------------
-Couchdb:
+## Couchdb:
 1. Go to COMP90024ASS2/ansible/couchdb
 2. Run ansible-playbook install_configure_couchdb.yml --key-file "CCC-keypair.pem" --extra-vars "ansible_sudo_pass=<your_sudo_password>" -i hosts.ini, it will 
   1) install docker 
@@ -14,7 +14,7 @@ Couchdb:
 (a GUI for couchdb database management, this method is the preferred methods in official documentation) or by running couchdb_joincluster.sh.
 
 ---------------------------------------------------------------------------
-Twitter analysis:
+## Twitter analysis:
 
 1. Go to COMP90024ASS2/ansible/twitter_analysis:
     
@@ -41,10 +41,10 @@ more arguments refer to parser in code wa.py.
 Then the results will be stored in couchdb on server (default in database data_analysis)
 
 ---------------------------------------------------------------------------
-Twitter correlation analysis:
+## Twitter correlation analysis:
 
 ---------------------------------------------------------------------------
-Web deploy:
+## Web deploy:
 
 1. Go to COMP90024ASS2/web:
 
