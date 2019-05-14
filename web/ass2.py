@@ -52,7 +52,7 @@ def make_tasks(data):
         task = {}
         task['city'] = key
         task['url'] = "http://127.0.0.1:5984/twitter/api/twitter_tasks/" + key
-        task['total_twitter'] = data[key]['total_twitter']
+        task['total_twitter'] = data[key]['total_twitter'] * 3
         new_tasks.append(task)
     return new_tasks
 
