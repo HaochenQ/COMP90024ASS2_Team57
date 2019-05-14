@@ -44,27 +44,21 @@ Twitter correlation analysis:
 ---------------------------------------------------------------------------
 Web deploy:
 
-1. Go to COMP90024ASS2/ansible/web:
+1. Go to COMP90024ASS2/web:
 
-    cd path/to/COMP90024ASS2/ansible/web
+    cd path/to/COMP90024ASS2/web
     
-2. Run run_twitter_analysis.sh file to start the ansible, it will:
- (1) install the useful packages. 
- (2) transfer all web files to remote instances
+2. Run command:
 
-    sudo ./run_web.sh
+    pip3 install -r requirements.txt
 
-3. Go to the remote server (45.113.235.228) and execute:
+   to install the useful packages. 
+
+3. Then execute:
     
     python3 ass2.py
 
-4. Then open a new terminal and enter:
-
-    4.1 sudo ssh -NT -i path/to/COMP90024ASS2/utils/CCC-keypair.pem -L 5000:localhost:5000 ubuntu@45.113.235.228
-
-        Then the website can be lauched in your localhost and the login page will be rendered. The username and the password are "admin".
-    
-    4.1 curl sentences, then, the ReSTful API can be used. There are three resources: twitter_tasks, aurin_tasks and analysis_tasks. And the sample commands are:
+4. Then open a new terminal and enter curl sentences, then, the ReSTful API can be used. There are three resources: twitter_tasks, aurin_tasks and analysis_tasks. And the sample commands are:
     
     Get a whole list of tasks:
         curl -XGET http://localhost:5000/twitter/api/twitter_tasks --basic --user admin:admin -H "Content-Type: application/json"
