@@ -1,9 +1,13 @@
 ## Team 57
 ## Team Members:
 Yixin Su (731067, yixins1@student.unimelb.edu.au)
+
 Guoen Jin (935833, guoenj@student.unimelb.edu.au)
+
 Tiantong Li (1037952, tiantongl1@student.unimelb.edu.au)
+
 Haikuan Liu (1010887, haikuanl@student.unimelb.edu.au)
+
 Haochen Qi (964325, hqq@student.unimelb.edu.au)
 
 
