@@ -1,3 +1,5 @@
+#Author: Guoen Jin 935833
+
 import tweepy
 import json
 import hashlib
