@@ -57,6 +57,8 @@ Web deploy:
 3. Then execute:
     
     python3 ass2.py
+    
+    The username and the password of the website are both "admin"
 
 4. Then open a new terminal and enter curl sentences, then, the ReSTful API can be used. There are three resources: twitter_tasks, aurin_tasks and analysis_tasks. And the sample commands are:
     
