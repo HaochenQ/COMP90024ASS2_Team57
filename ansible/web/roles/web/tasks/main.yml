@@ -1,2 +1,0 @@
-- name: Run the command if the specified file does not exist.
-  command: /usr/bin/make_database.sh arg1 arg2 creates=/path/to/database

@@ -1,6 +1,0 @@
-- hosts: all_server
-  remote_user: ubuntu
-  sudo: yes
-  roles: 
-    - common
-    - web
