@@ -1,3 +1,5 @@
+#Instructions:
+
 VM:
 1. Go to COMP90024ASS2/ansible/instances
 2. Run run-nectar.sh, password can be found in COMP90024ASS2/ansible/instances/password&profile.txt
