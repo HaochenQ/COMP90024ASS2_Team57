@@ -28,7 +28,7 @@ Haochen Qi (964325, hqq@student.unimelb.edu.au)
 (a GUI for couchdb database management, this method is the preferred methods in official documentation) or by running couchdb_joincluster.sh.
 
 ---------------------------------------------------------------------------
-## Twitter analysis:
+## Gluttony-related Twitter Finding:
 
 1. Go to COMP90024ASS2/ansible/twitter_analysis:
     ```
