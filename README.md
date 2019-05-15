@@ -59,7 +59,19 @@ Then the results will be stored in couchdb on server (default in database data_a
 
 ---------------------------------------------------------------------------
 ## Twitter correlation analysis:
+1. Go to COMP90024ASS2/twitter_analysis/correlation_analysis
+    ```
+    cd path/to/COMP90024ASS2/twitter_analysis/correlation_analysis
+    ```
+2. All needed python package are already installed in former playbook
 
+3. Then execute:
+    ```
+    python3 correlationAnalysis.py
+    ```
+    it will extract needed data from downloaded aruin datasets, download twitter analysis result from couchdb,
+    and calculate coorelation coefficients between each health issue and twitter analysis results, then plot
+    a correlation matrix
 ---------------------------------------------------------------------------
 ## Web deploy:
 

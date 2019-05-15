@@ -87,29 +87,6 @@ db_twitter = couchserver['data_analysis']
 db_aurin = couchserver['aurin']
 
 
-# plot aurin data
-
-N = 6
-sydney = (33.781,25.15, 56.725, 21.719, 10.944,65.088)
-melbourne = (33.288,21.6,52.013,21.012,10.575,55.787)
-adelaide = (18.0,14.05,30.3,12.1,7.05,33.45)
-brisbane = (26.275,20.675,47.375,18.55,9.1,51.0)
-ind = np.arange(N)
-width = 0.20
-plt.bar(ind, sydney, width, label='sydney')
-plt.bar(ind + width, melbourne, width, label='melbourne')
-plt.bar(ind + 2*width, adelaide, width, label='adelaide')
-plt.bar(ind + 3*width, brisbane, width, label='brisbane')
-
-
-plt.ylabel('ratio of people',size=12)
-plt.title('Health Condition in Four Cities',size=18)
-
-plt.xticks(ind + width*1.5 , ('overweight','obesity','chronic disease risk',
-       'high blood pressure','mental depression','low exercise'),rotation=-30,size = 12)
-plt.legend(loc='best')
-plt.show()
-
 # upload aurin data into couchdb
 
 try:
@@ -239,9 +216,9 @@ import matplotlib.pyplot as plt
 objects = ('overweight','obesity','chronic disease risk',
        'high blood pressure','mental depression','no/low exercise')
 y_pos = np.arange(len(objects))
-performance = [0.669, 0.506, 0.625, 0.695, 0.638, 0.515]
+value = [0.669, 0.506, 0.625, 0.695, 0.638, 0.515]
 
-plt.barh( y_pos, performance, height= 0.5, align='center', alpha=0.5, color='#000080')
+plt.barh( y_pos, value, height= 0.5, align='center', alpha=0.5, color='#000080')
 plt.yticks(y_pos, objects,size=11)
 plt.xlabel('Correlation coefficient',size=11)
 plt.title('Correlation coefficients between \n glutton tweets(100 words) and health problems',size=13)
